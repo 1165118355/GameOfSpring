@@ -54,7 +54,6 @@ public class Control : MonoBehaviour
 
     void updateCamera()
     {
-
         if (ControlCamera != null)
         {
             ControlCamera.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 3;
@@ -65,13 +64,18 @@ public class Control : MonoBehaviour
             var particalShpe = EffectBackground.shape;
             particalShpe.position = position;
             position.z = -1000;
-            ControlCamera.transform.position = position;
 
             //
             var mousePosition = Input.mousePosition;
             var worldPosition = ControlCamera.ScreenToWorldPoint(mousePosition);
             worldPosition.z = 0;
             ControlShp.arm(worldPosition);
+
+
+            float xS = mousePosition.x / UnityEngine.Screen.width  * 2-1;
+            float yS = mousePosition.y / UnityEngine.Screen.height * 2-1;
+            var offset = new Vector3(xS, yS) * ControlCamera.orthographicSize;
+            ControlCamera.transform.position = position + offset;
         }
     }
 
