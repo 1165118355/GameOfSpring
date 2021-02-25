@@ -26,9 +26,10 @@ public class WeaponSlot : Slot
     public bool ShowRange { 
         get { return m_ShowRange; }
         set {
-            if(RangeRender)
-                RangeRender.SetActive(ShowRange);
-            m_ShowRange = value; }
+            m_ShowRange = value;
+            if (RangeRender)
+                RangeRender.SetActive(m_ShowRange);
+            }
     }
 
     void Start()  

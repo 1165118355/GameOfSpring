@@ -17,7 +17,16 @@ public class Control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(ControlShp != null)
+        checkMove();
+        checkFire();
+        updateCamera();
+        checkHotKey();
+
+    }
+
+    void checkMove()
+    {
+        if (ControlShp != null)
         {
             if (Input.GetKey(KeyCode.W))
                 ControlShp.moveForward();
@@ -28,26 +37,29 @@ public class Control : MonoBehaviour
             if (Input.GetKey(KeyCode.D))
                 ControlShp.rotationRight();
         }
+    }
 
-        if(Input.GetMouseButton(0))
+    void checkFire()
+    {
+
+        if (Input.GetMouseButton(0))
         {
             ControlShp.fireAll();
-        }  
+        }
         if (Input.GetMouseButton(1))
         {
             ControlShp.fireFeatureAll();
         }
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            m_EnabledShowRange = !m_EnabledShowRange;
-            ControlShp.EnabledShowRange = m_EnabledShowRange;
-        }
+    }
 
-        if(ControlCamera != null)
+    void updateCamera()
+    {
+
+        if (ControlCamera != null)
         {
-            ControlCamera.orthographicSize -= Input.GetAxis("Mouse ScrollWheel")*3;
+            ControlCamera.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 3;
         }
-        if(ControlShp)
+        if (ControlShp)
         {
             var position = ControlShp.transform.position;
             var particalShpe = EffectBackground.shape;
@@ -61,6 +73,15 @@ public class Control : MonoBehaviour
             worldPosition.z = 0;
             ControlShp.arm(worldPosition);
         }
+    }
+
+    void checkHotKey()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            m_EnabledShowRange = !m_EnabledShowRange;
+            ControlShp.EnabledShowRange = m_EnabledShowRange;
+        }
 
         /// Test Code 
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -71,6 +92,5 @@ public class Control : MonoBehaviour
         {
             Time.timeScale -= 1;
         }
-
     }
 }
