@@ -74,7 +74,8 @@ public class Control : MonoBehaviour
 
             float xS = mousePosition.x / UnityEngine.Screen.width  * 2-1;
             float yS = mousePosition.y / UnityEngine.Screen.height * 2-1;
-            var offset = new Vector3(xS, yS) * ControlCamera.orthographicSize;
+            var screenPosScale = new Vector3(xS, yS);
+            var offset = screenPosScale * ((ControlCamera.orthographicSize * Mathf.Sin(screenPosScale.magnitude)) *0.8f);
             ControlCamera.transform.position = position + offset;
         }
     }
