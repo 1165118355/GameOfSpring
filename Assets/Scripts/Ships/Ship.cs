@@ -17,6 +17,16 @@ public class Ship : MonoBehaviour
     List<Engine> m_Engines;
     List<WeaponSlot> m_WeaponSlots = new List<WeaponSlot>();
     List<FeatureSlot> m_FeatureSlots = new List<FeatureSlot>();
+    string m_StructProcessUIPath = "Perfabs/StructProcess";
+    string m_StructEnemyProcessUIPath = "Perfabs/StructEnemyProcess";
+    string m_EnergyProcessUIPath = "Perfabs/EnergyProcess";
+
+    GameObject m_StructValueObj;
+    GameObject m_EnergyValueObj;
+    float m_Radius=1;
+
+    int m_isPlayerEnemy = 1;
+
     public bool EnabledShowRange {
         set {
             for(int i=0; i<m_WeaponSlots.Count; ++i)
@@ -39,6 +49,15 @@ public class Ship : MonoBehaviour
         collectEngines(gameObject);
         collectSlots(gameObject);
         m_ShipStruct.Influence = m_ShipStruct.Influence;
+
+        var bound = GetComponent<SpriteRenderer>().bounds;
+        m_Radius = (bound.size.y + bound.size.x) / 4;
+        if(m_isPlayerEnemy == 1)
+            createProcessUI(ref m_StructValueObj, m_StructEnemyProcessUIPath);
+        else
+            createProcessUI(ref m_StructValueObj, m_StructProcessUIPath);
+
+        createProcessUI(ref m_EnergyValueObj, m_EnergyProcessUIPath);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -49,23 +68,68 @@ public class Ship : MonoBehaviour
     {
         if (!m_IsMoveNow)
         {
-            m_EngineFire -= Time.deltaTime/2;
+            m_EngineFire -= Time.deltaTime / 2;
             m_EngineFire = Mathf.Max(0, m_EngineFire);
         }
         else
         {
-            m_EngineFire += Time.deltaTime/2;
+            m_EngineFire += Time.deltaTime / 2;
             m_EngineFire = Mathf.Min(1, m_EngineFire);
         }
         m_IsMoveNow = false;
-        for (int i=0; i< m_Engines.Count; ++i)
+        for (int i = 0; i < m_Engines.Count; ++i)
         {
             m_Engines[i].FirePower = m_EngineFire;
         }
+
+        if (m_StructValueObj)
+            m_StructValueObj.transform.position = transform.position + new Vector3(-m_Radius, m_Radius, 0);
+        if (m_EnergyValueObj)
+            m_EnergyValueObj.transform.position = transform.position + new Vector3(-m_Radius, m_Radius - m_StructValueObj.transform.localScale.y * 2, 0);
     }
     private void FixedUpdate()
     {
-        m_ShipStruct.m_Power = Mathf.Min(m_ShipStruct.m_PowerMax, m_ShipStruct.m_Power + m_ShipStruct.m_PowerIncrement * Time.fixedDeltaTime);
+        m_ShipStruct.m_Electric = Mathf.Min(m_ShipStruct.m_ElectricMax, m_ShipStruct.m_Electric + m_ShipStruct.m_ElectricIncrement * Time.fixedDeltaTime);
+
+        if(m_StructValueObj && m_StructValueObj.transform.childCount > 0)
+        {
+            var proccesValue = m_StructValueObj.transform.GetChild(0);
+            proccesValue.localScale = new Vector3(m_ShipStruct.m_StructurePoint / m_ShipStruct.m_StructurePointMax, 1, 1);
+        }
+        if(m_EnergyValueObj && m_EnergyValueObj.transform.childCount > 0)
+        {
+            var proccesValue = m_EnergyValueObj.transform.GetChild(0);
+            proccesValue.localScale = new Vector3(m_ShipStruct.m_Electric / m_ShipStruct.m_ElectricMax, 1, 1);
+        }
+    }
+
+    void createProcessUI(ref GameObject objs, string path)
+    {
+        if(objs)
+            Destroy(objs);
+
+        var obj = Resources.Load<GameObject>(path);
+        var uiParent = GameObject.Find("DynamicUI");
+        if (obj)
+        {
+            GameObject proceesValue = Instantiate(obj as GameObject);
+
+            var newScale = proceesValue.transform.localScale;
+            newScale.x = m_Radius * 2;
+
+            proceesValue.transform.localPosition = new Vector3(-m_Radius, m_Radius, 0);
+            proceesValue.transform.localScale = newScale;
+            objs = proceesValue.gameObject;
+            if (uiParent)
+                objs.transform.SetParent(uiParent.transform);
+        }
+
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(m_StructValueObj);
+        Destroy(m_EnergyValueObj);
     }
 
     public void fireAll()
@@ -185,6 +249,7 @@ public class Ship : MonoBehaviour
     }
     void onInfluenceChanged(string newInfluenceName)
     {
+        m_isPlayerEnemy = -1;
         var influence = InfluenceMG.get().find(newInfluenceName);
         if (influence.Name != InfluenceMG.INFLUENCE_PLAYER)
         {
@@ -192,11 +257,13 @@ public class Ship : MonoBehaviour
             {
                 SpriteRenderer sprite = m_ShipInfluenceRelationFlag.GetComponent<SpriteRenderer>();
                 sprite.material = Resources.Load<Material>("Materials/Colors/Enemy");
+                m_isPlayerEnemy = 1;
             }
             else
             {
                 SpriteRenderer sprite = m_ShipInfluenceRelationFlag.GetComponent<SpriteRenderer>();
                 sprite.material = Resources.Load<Material>("Materials/Colors/Friend");
+                m_isPlayerEnemy = 0;
             }
         }
     }

@@ -34,7 +34,8 @@ public class ShipStruct
     public float m_StructurePointMax = 1;
     public string m_Influence="";
     public float m_DetectRange=20;
-    public float m_PowerMax=800;
-    public float m_Power= 800;
-    public float m_PowerIncrement=12;
+    public float m_ElectricMax=800;
+    public float m_Electric= 800;
+    public float m_ElectricIncrement=12;
+    public float m_ElectricPower = 60;
 }

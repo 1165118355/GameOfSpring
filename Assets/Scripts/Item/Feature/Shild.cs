@@ -8,7 +8,7 @@ using UnityEngine;
 public class Shild : Feature
 {
     public float m_EnergyMax=400;
-    public float m_Energy=400;
+    public float m_Energy=0;
     public float m_Scale = 4;
     GameObject m_ShildObj;
     
@@ -18,6 +18,9 @@ public class Shild : Feature
         EffectResource = "Perfabs/Feature/Shild";
 
         m_ShildObj = GameObject.Instantiate(Resources.Load<GameObject>(EffectResource));
+
+        ShildFunction shildFunction = m_ShildObj.GetComponent<ShildFunction>();
+        shildFunction.m_Shild = this;
     }
     public override void setParent(GameObject parent)
     {
@@ -36,16 +39,29 @@ public class Shild : Feature
 
         var shipObject = m_Slot.transform.parent;
         Ship ship = shipObject.GetComponent<Ship>();
-        var needEnergy = m_EnergyMax - m_Energy;
-        if(ship.m_ShipStruct.m_Power >= m_EnergyMax/4)
+        float needEnergy = m_EnergyMax / 4;
+        if (m_Energy == 0)
         {
-            m_ShildObj.SetActive(true);
-            ShildFunction shildFunction = m_ShildObj.GetComponent<ShildFunction>();
-            shildFunction.m_Shild = this;
 
-            m_Energy += needEnergy + Math.Min(ship.m_ShipStruct.m_Power - needEnergy, 0);
-            ship.m_ShipStruct.m_Power = Math.Max(0, ship.m_ShipStruct.m_Power - needEnergy);
+            if (needEnergy > ship.m_ShipStruct.m_Electric)
+                return;
+            m_Energy += needEnergy;
+            ship.m_ShipStruct.m_Electric -= needEnergy;
+            return;
         }
+        if(!m_ShildObj.activeSelf)
+            m_ShildObj.SetActive(true);
+
+        needEnergy = (m_EnergyMax - m_Energy) * Time.deltaTime;
+
+        if (needEnergy > ship.m_ShipStruct.m_ElectricPower * Time.deltaTime)
+            needEnergy = ship.m_ShipStruct.m_ElectricPower * Time.deltaTime;
+
+        if (needEnergy > ship.m_ShipStruct.m_Electric)
+            needEnergy = ship.m_ShipStruct.m_Electric;
+
+        m_Energy += needEnergy;
+        ship.m_ShipStruct.m_Electric = Math.Max(0, ship.m_ShipStruct.m_Electric - needEnergy);
 
     }
 }
