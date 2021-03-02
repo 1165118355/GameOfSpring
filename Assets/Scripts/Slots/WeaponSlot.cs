@@ -17,9 +17,10 @@ public class WeaponSlot : Slot
     public float AngleRange = 180;
     public float m_Angle = 0;
     public FireMode m_FireMode = FireMode.WEAPON_MODE_AUTO;
+    public Weapon.Level m_Level = Weapon.Level.LEVEL_SMALL;
     float ShutCooling = 0;//  开火冷却时间
     float ShotErrorValueCooling = 0;//  开火误差冷却
-    bool m_FireReady = false;
+    bool m_FireReady = true;
     Weapon m_Weapon;
     GameObject RangeRender;
     public bool m_ShowRange = false;
@@ -36,13 +37,21 @@ public class WeaponSlot : Slot
     {
         CurrentWeaponDirection = ForwardDirection;
         Weapon weapon;
-        float randomValue = Random.Range(0f, 1f);
-        if (randomValue > 0.5)
-            weapon = new MissileStandard01();
+        if(m_Level == Weapon.Level.LEVEL_SMALL)
+        {
+            float randomValue = Random.Range(0f, 1f);
+            if (randomValue > 0.5)
+                weapon = new MissileStandard01();
+            else
+                weapon = new LightMachineGun();
+            switchWeapon(weapon);
+        }
         else
-            weapon = new LightMachineGun();
+        {
+            weapon = new AutoGunnery();
+            switchWeapon(weapon);
+        }
 
-        switchWeapon(weapon);
     }
 
     // Update is called once per frame
@@ -172,49 +181,14 @@ public class WeaponSlot : Slot
 
     public void fire()
     {
-        if (null == m_Weapon)
+        if (null == m_Weapon ||
+            m_FireReady == false)
         {
             return;
         }
-        if (m_FireReady == false)
-            return;
-        var bullet = BulletPool.get().Take(m_Weapon);
-        var bulletComponent = bullet.GetComponent<FlyItem>();
-
-        if (null == bulletComponent)
-            return;
-        m_Weapon.m_ShotErrorValue = Mathf.Min(m_Weapon.m_ShotErrorValueMax, m_Weapon.m_ShotErrorValue + m_Weapon.m_ShotErrorValueIncrement);
-        float errorValueHalf = m_Weapon.m_ShotErrorValue / 2;
-        float offsetValue = Random.Range(-errorValueHalf, errorValueHalf);
-        bulletComponent.clean();
-        bulletComponent.FlyDirection = Quaternion.AngleAxis(offsetValue, Vector3.forward) * CurrentWeaponDirection;
-        bulletComponent.transform.position = transform.position;
-        bulletComponent.FlyVelocity = m_Weapon.WeaponBulletFlyVelocity;
-        bulletComponent.Life = m_Weapon.WeaponShutRange;
-        bulletComponent.WeaponClassName = m_Weapon.GetType().Name;
-        bulletComponent.WeaponType = m_Weapon.m_Type;
-        bulletComponent.Ship = gameObject.transform.parent.gameObject;
-        bulletComponent.Damage = m_Weapon.WeaponDamage;
-        bulletComponent.m_Weapon = m_Weapon;
+        m_Weapon.fire(transform.parent.gameObject, transform.position, CurrentWeaponDirection);
         ShotErrorValueCooling = 1;
         m_FireReady = false;
-        var soundObj = SoundsPool.get().Take(m_Weapon.m_FireAudioResouce);
-        if (null == soundObj)
-            return;
-        soundObj.transform.position = transform.position;
-        AudioSource soundCom = soundObj.GetComponent<AudioSource>();
-        if (null == soundCom)
-            return;
-        Ship ship = transform.parent.GetComponent<Ship>();
-        if(InfluenceMG.INFLUENCE_PLAYER == ship.m_ShipStruct.Influence)
-        {
-            soundCom.priority = 10;
-        }
-        else
-        {
-            soundCom.priority = 100;
-        }
-        soundCom.Play();
     }
 
     void switchWeapon(Weapon weapon)
@@ -236,7 +210,7 @@ public class WeaponSlot : Slot
         RangeRender.transform.localScale = new Vector3(1/transform.localScale.x, 1 / transform.localScale.y, 1 / transform.localScale.z);
         LineRenderer line = RangeRender.GetComponent<LineRenderer>();
 
-        var resultDirection = transform.localRotation * ForwardDirection;
+        var resultDirection = ForwardDirection;
         resultDirection = Quaternion.AngleAxis(AngleRange / 2, new Vector3(0, 0, 1)) * resultDirection;
         List<Vector3> points = new List<Vector3>();
         points.Add(Vector3.zero);

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-class LightMachineGun: WeaponSmall
+class LightMachineGun: Weapon
 {
     public LightMachineGun()
     {

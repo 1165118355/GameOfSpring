@@ -14,7 +14,7 @@ public class Shild : Feature
     
     public Shild()
     {
-        EmiterResource = "Perfabs/Feature/EmiterShild ";
+        EmiterResource = "Perfabs/Feature/EmiterShild";
         EffectResource = "Perfabs/Feature/Shild";
 
         m_ShildObj = GameObject.Instantiate(Resources.Load<GameObject>(EffectResource));

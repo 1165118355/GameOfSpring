@@ -102,4 +102,5 @@ MonoBehaviour:
   AngleRange: 90
   m_Angle: 0
   m_FireMode: 1
+  m_Level: 1
   m_ShowRange: 0

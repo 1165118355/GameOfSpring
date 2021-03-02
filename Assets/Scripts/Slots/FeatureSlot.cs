@@ -31,5 +31,7 @@ public class FeatureSlot : Slot
     void switchFeature(Feature feature)
     {
         m_Feature = feature;
+        EmiterObject = Instantiate(Resources.Load<GameObject>(m_Feature.EmiterResource)) as GameObject;
+        EmiterObject.transform.SetParent(transform, false);
     }
 }

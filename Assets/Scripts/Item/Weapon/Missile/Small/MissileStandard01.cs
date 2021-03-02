@@ -11,10 +11,10 @@ public class MissileStandard01: Missile
         m_Type = DamageType.TYPE_EXPLOSION;
         WeaponShutRange = 15;
         m_TrunVelocity = 60;
-        WeaponShutVelocity = 3.4f;
+        WeaponShutVelocity = 6.4f;
         WeaponBulletFlyVelocity = 4;
         WeaponDamage = 72f;
-        WeaponResource = "Perfabs/Weapon/Small/LightMachineGun";
+        WeaponResource = "Perfabs/Weapon/Small/MissileStandard";
         BulletResource = "Perfabs/Bullet/MissileStandard01";
         m_FireAudioResouce = "Perfabs/Audio/PuHu";
     }
