@@ -145,7 +145,7 @@ public class Ship : MonoBehaviour
     }
     public void fireFeatureAll()
     {
-        for (int i = 0; i < m_WeaponSlots.Count; ++i)
+        for (int i = 0; i < m_FeatureSlots.Count; ++i)
         {
             var featureSlot = m_FeatureSlots[i].GetComponent<FeatureSlot>();
             if (featureSlot)

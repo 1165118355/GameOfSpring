@@ -34,7 +34,7 @@ public class Weapon: Item
     public Level  m_Level = Level.LEVEL_SMALL;
 
 
-    public virtual void fire(GameObject ship, Vector3 position, Vector3 direction)
+    public virtual void Fire(GameObject ship, Vector3 position, Vector3 direction)
     {
         var bullet = BulletPool.get().Take(this);
         var bulletComponent = bullet.GetComponent<FlyItem>();
@@ -72,6 +72,11 @@ public class Weapon: Item
             soundCom.priority = 100;
         }
         soundCom.Play();
+    }
+
+    public virtual int update()
+    {
+        return 1;
     }
 
 }

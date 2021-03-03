@@ -57,6 +57,7 @@ public class WeaponSlot : Slot
     // Update is called once per frame
     void Update()
     {
+        m_Weapon.update();
         ShutCooling += Time.deltaTime;
         if (ShutCooling > m_Weapon.WeaponShutVelocity)
         {
@@ -186,9 +187,10 @@ public class WeaponSlot : Slot
         {
             return;
         }
-        m_Weapon.fire(transform.parent.gameObject, transform.position, CurrentWeaponDirection);
+        m_Weapon.Fire(transform.parent.gameObject, transform.position, CurrentWeaponDirection);
         ShotErrorValueCooling = 1;
         m_FireReady = false;
+        ShutCooling = 0;
     }
 
     void switchWeapon(Weapon weapon)
