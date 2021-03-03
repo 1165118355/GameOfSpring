@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8131cda8f436b9e47a21d8736916e0ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: {fileID: 4381008309282648971}
+  m_ShotRange: {fileID: 4381008310165399083}
 --- !u!1 &4381008310165399077
 GameObject:
   m_ObjectHideFlags: 0
