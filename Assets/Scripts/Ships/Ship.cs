@@ -14,9 +14,9 @@ public class Ship : MonoBehaviour
     public ShipStruct m_ShipStruct = new ShipStruct();
     public GameObject m_ShipInfluenceRelationFlag;
 
-    List<Engine> m_Engines;
-    List<WeaponSlot> m_WeaponSlots = new List<WeaponSlot>();
-    List<FeatureSlot> m_FeatureSlots = new List<FeatureSlot>();
+    public List<Engine> m_Engines;
+    public List<WeaponSlot> m_WeaponSlots = new List<WeaponSlot>();
+    public List<FeatureSlot> m_FeatureSlots = new List<FeatureSlot>();
     string m_StructProcessUIPath = "Perfabs/StructProcess";
     string m_StructEnemyProcessUIPath = "Perfabs/StructEnemyProcess";
     string m_EnergyProcessUIPath = "Perfabs/EnergyProcess";
@@ -28,12 +28,7 @@ public class Ship : MonoBehaviour
     int m_isPlayerEnemy = 1;
 
     public bool EnabledShowRange {
-        set {
-            for(int i=0; i<m_WeaponSlots.Count; ++i)
-            {
-                m_WeaponSlots[i].ShowRange = value;
-            }
-            m_EnabledShowRange = value; }
+        set { m_EnabledShowRange = value; }
         get { return m_EnabledShowRange; }
     }
 
@@ -143,6 +138,18 @@ public class Ship : MonoBehaviour
             }
         }
     }
+
+    public void fireByWeaponGourp(int groupIndex)
+    {
+        for (int i = 0; i < m_WeaponSlots.Count; ++i)
+        {
+            var weaponSlot = m_WeaponSlots[i].GetComponent<WeaponSlot>();
+            if (weaponSlot && weaponSlot.WeaponGroup == groupIndex)
+            {
+                weaponSlot.fire();
+            }
+        }
+    }
     public void fireFeatureAll()
     {
         for (int i = 0; i < m_FeatureSlots.Count; ++i)
@@ -184,6 +191,22 @@ public class Ship : MonoBehaviour
             ShipManager.get().RemoveShip(gameObject);
             Destroy(gameObject);
             Destroy(boomObj, 5);
+        }
+    }
+
+    public void SetShowRange(int weaponGroup)
+    {
+        for(int i=0; i< m_WeaponSlots.Count; ++i)
+        {
+            if(m_WeaponSlots[i].WeaponGroup == weaponGroup &&
+                m_EnabledShowRange)
+            {
+                m_WeaponSlots[i].ShowRange = true;
+            }
+            else
+            {
+                m_WeaponSlots[i].ShowRange = false;
+            }
         }
     }
 

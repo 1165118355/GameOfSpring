@@ -20,6 +20,7 @@ class AutoGunnery : Weapon
         WeaponBulletFlyVelocity = 9;
         WeaponDamage = 20f;
         WeaponTurnSpeed = 90f;
+        Name = "重型自动炮";
         WeaponResource = "Perfabs/Weapon/Small/AutoGunnery";
         BulletResource = "Perfabs/Bullet/LiveBullet";
         m_FireAudioResouce = "Perfabs/Audio/Dang";

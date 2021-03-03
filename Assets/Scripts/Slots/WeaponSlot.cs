@@ -21,7 +21,7 @@ public class WeaponSlot : Slot
     float ShutCooling = 0;//  开火冷却时间
     float ShotErrorValueCooling = 0;//  开火误差冷却
     bool m_FireReady = true;
-    Weapon m_Weapon;
+    public Weapon m_Weapon;
     GameObject RangeRender;
     public bool m_ShowRange = false;
     public bool ShowRange { 

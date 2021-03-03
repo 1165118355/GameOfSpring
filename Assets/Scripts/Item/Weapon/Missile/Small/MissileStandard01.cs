@@ -14,6 +14,7 @@ public class MissileStandard01: Missile
         WeaponShutVelocity = 6.4f;
         WeaponBulletFlyVelocity = 4;
         WeaponDamage = 72f;
+        Name = "标准-1";
         WeaponResource = "Perfabs/Weapon/Small/MissileStandard";
         BulletResource = "Perfabs/Bullet/MissileStandard01";
         m_FireAudioResouce = "Perfabs/Audio/PuHu";

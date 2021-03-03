@@ -14,6 +14,7 @@ class LightMachineGun: Weapon
         WeaponBulletFlyVelocity = 10;
         WeaponDamage = 3f;
         WeaponTurnSpeed = 140f;
+        Name = "轻机枪";
         WeaponResource = "Perfabs/Weapon/Small/LightMachineGun";
         BulletResource = "Perfabs/Bullet/LiveBullet";
         m_FireAudioResouce = "Perfabs/Audio/Da";

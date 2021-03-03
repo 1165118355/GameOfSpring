@@ -20,6 +20,7 @@ public class Weapon: Item
         LEVEL_BIG,
     }
     public DamageType m_Type = DamageType.TYPE_KINETIC;
+    public string Name = "none";
     public float  WeaponShutRange = 10;
     public float  WeaponShutVelocity = 0.2f;
     public float  WeaponBulletFlyVelocity = 5f;
