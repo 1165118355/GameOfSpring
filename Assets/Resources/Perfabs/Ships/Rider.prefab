@@ -192,17 +192,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c7b25de44320844aed7ae4e2fc22ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VelocityMax: 120
-  RotateSpeedMax: 13
+  VelocityMax: 90
+  RotateSpeedMax: 10
   m_ShipStruct:
-    m_StructurePoint: 1100
-    m_StructurePointMax: 1100
+    m_StructurePoint: 1900
+    m_StructurePointMax: 1900
     m_Influence: Player
-    m_DetectRange: 20
-    m_ElectricMax: 800
-    m_Electric: 1800
-    m_ElectricIncrement: 90
-    m_ElectricPower: 120
+    m_DetectRange: 25
+    m_ElectricMax: 1600
+    m_Electric: 1600
+    m_ElectricIncrement: 160
+    m_ElectricPower: 210
   m_ShipInfluenceRelationFlag: {fileID: 864200814896661419}
   m_Engines: []
   m_WeaponSlots: []

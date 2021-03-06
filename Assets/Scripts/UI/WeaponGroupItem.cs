@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WeaponGroupItem : MonoBehaviour
 {
-    public Text m_Name;
+    public Text m_NameText;
     public Dropdown m_Group;
     public Toggle m_AutoFire;
     WeaponSlot m_WeaponSlot;
@@ -15,7 +15,7 @@ public class WeaponGroupItem : MonoBehaviour
             if (null == value)
                 return;
             m_WeaponSlot = value;
-            m_Name.text = m_WeaponSlot.m_Weapon.Name;
+            m_NameText.text = m_WeaponSlot.m_Weapon.Name;
             m_Group.value = m_WeaponSlot.WeaponGroup - 1;
             m_AutoFire.isOn = (m_WeaponSlot.m_FireMode == WeaponSlot.FireMode.WEAPON_MODE_AUTO);
         }

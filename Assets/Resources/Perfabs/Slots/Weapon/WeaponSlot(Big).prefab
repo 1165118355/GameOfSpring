@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 991475539422112332}
   - component: {fileID: 3960358693603789622}
   - component: {fileID: 3227845663353177340}
-  m_Layer: 0
+  - component: {fileID: 794269334376041606}
+  m_Layer: 10
   m_Name: WeaponSlot(Big)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,3 +105,19 @@ MonoBehaviour:
   m_FireMode: 1
   m_Level: 2
   m_ShowRange: 0
+--- !u!58 &794269334376041606
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4440878774792319254}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.008628368, y: -0.002465278}
+  serializedVersion: 2
+  m_Radius: 0.2669974

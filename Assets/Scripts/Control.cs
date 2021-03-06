@@ -9,6 +9,7 @@ public class Control : MonoBehaviour
     public Camera ControlCamera;
     public ParticleSystem EffectBackground;
     public WeaponGroupPanel m_WeaponGroupUI;
+    public GameObject m_Tip;
     bool m_EnabledShowRange = false;
     int m_CurrentWeaponGroup=1;
     void Start()
@@ -20,10 +21,13 @@ public class Control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        checkHotKey();
+        updateCamera();
+        EditorMode editorMode = GetComponent<EditorMode>();
+        if (editorMode.enabled)
+            return;
         checkMove();
         checkFire();
-        updateCamera();
-        checkHotKey();
 
     }
 
@@ -138,6 +142,14 @@ public class Control : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             Time.timeScale -= 1;
+        }
+
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            EditorMode editorMode = GetComponent<EditorMode>();
+            editorMode.enabled = !editorMode.enabled;
+            if (m_Tip)
+                m_Tip.SetActive(editorMode.enabled);
         }
     }
 }

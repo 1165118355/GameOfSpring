@@ -681,7 +681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2334de0f268eb4193881f3d8b51e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: {fileID: 487832600324773703}
+  m_NameText: {fileID: 487832600324773703}
   m_Group: {fileID: 487832599878893858}
   m_AutoFire: {fileID: 487832600739836472}
 --- !u!1 &487832599878893860
