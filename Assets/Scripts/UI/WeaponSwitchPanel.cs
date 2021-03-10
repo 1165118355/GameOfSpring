@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class WeaponSwitchPanel : MonoBehaviour
 {
+    public GameObject m_WeaponDescriptionPanel;
     public GameObject m_Viewport;
     public WeaponPreviewItem m_CurrentPerviewItem;
     public GameObject m_PreviewItemPerfab;
@@ -29,6 +30,7 @@ public class WeaponSwitchPanel : MonoBehaviour
         }
 
         m_CurrentPerviewItem.WeaponItem = slot.m_Weapon;
+        m_CurrentPerviewItem.m_Slot = slot;
 
         List<Weapon> weapons = new List<Weapon>();
         weapons.Add(new LightMachineGun());
@@ -40,7 +42,9 @@ public class WeaponSwitchPanel : MonoBehaviour
             objItem.transform.SetParent(m_Viewport.transform);
 
             var perviewItem = objItem.GetComponent<WeaponPreviewItem>();
+            perviewItem.m_WeaponDescriptionPanel = m_WeaponDescriptionPanel;
             perviewItem.WeaponItem = weapons[i];
+            perviewItem.m_Slot = m_Slot;
             height += perviewItem.GetComponent<RectTransform>().rect.height;
         }
         Vector2 rect = new Vector2(m_Viewport.GetComponent<RectTransform>().rect.width, m_Viewport.GetComponent<RectTransform>().rect.height);

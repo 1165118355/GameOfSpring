@@ -15,11 +15,11 @@ class AutoGunnery : Weapon
     Vector3 m_MultiFireDirection;
     public AutoGunnery()
     {
-        WeaponShutRange = 16;
-        WeaponShutVelocity = 1.7f;
-        WeaponBulletFlyVelocity = 9;
-        WeaponDamage = 20f;
-        WeaponTurnSpeed = 90f;
+        ShutRange = 16;
+        ShutVelocity = 1.7f;
+        BulletFlyVelocity = 9;
+        Damage = 20f;
+        TurnSpeed = 90f;
         Name = "重型自动炮";
         WeaponResource = "Perfabs/Weapon/Small/AutoGunnery";
         BulletResource = "Perfabs/Bullet/LiveBullet";

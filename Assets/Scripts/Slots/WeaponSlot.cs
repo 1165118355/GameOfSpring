@@ -59,7 +59,7 @@ public class WeaponSlot : Slot
     {
         m_Weapon.update();
         ShutCooling += Time.deltaTime;
-        if (ShutCooling > m_Weapon.WeaponShutVelocity)
+        if (ShutCooling > m_Weapon.ShutVelocity)
         {
             m_FireReady = true;
             ShutCooling = 0;
@@ -84,9 +84,9 @@ public class WeaponSlot : Slot
             lr = Vector3.Cross(CurrentWeaponDirection, targetDirection).z;
 
         if (lr >= 0)
-            m_Angle += m_Weapon.WeaponTurnSpeed * Time.deltaTime;
+            m_Angle += m_Weapon.TurnSpeed * Time.deltaTime;
         else
-            m_Angle -= m_Weapon.WeaponTurnSpeed * Time.deltaTime;
+            m_Angle -= m_Weapon.TurnSpeed * Time.deltaTime;
 
         m_Angle = Mathf.Clamp(m_Angle, -AngleRange/2, AngleRange/2);
         var resultRotation = Quaternion.AngleAxis(m_Angle, Vector3.forward);
@@ -120,7 +120,7 @@ public class WeaponSlot : Slot
                 continue; 
             }
             float targetPositionDistance = targetDifference.magnitude;
-            if (targetPositionDistance > m_Weapon.WeaponShutRange)
+            if (targetPositionDistance > m_Weapon.ShutRange)
             {
                 continue;
             }
@@ -154,7 +154,7 @@ public class WeaponSlot : Slot
         {
             resultDirection = Quaternion.AngleAxis(1, new Vector3(0, 0, -1)) * resultDirection;
             resultDirection = resultDirection.normalized;
-            var targetPosition = Camera.current.WorldToScreenPoint(transform.position + resultDirection * m_Weapon.WeaponShutRange);
+            var targetPosition = Camera.current.WorldToScreenPoint(transform.position + resultDirection * m_Weapon.ShutRange);
             targetPosition.x = targetPosition.x / Camera.current.pixelWidth;
             targetPosition.y = targetPosition.y / Camera.current.pixelHeight;
             GL.Vertex3(targetPosition.x, targetPosition.y, 0);
@@ -193,7 +193,7 @@ public class WeaponSlot : Slot
         ShutCooling = 0;
     }
 
-    void switchWeapon(Weapon weapon)
+    public void switchWeapon(Weapon weapon)
     {
         if(EmiterObject)
             Destroy(EmiterObject);
@@ -222,7 +222,7 @@ public class WeaponSlot : Slot
             resultDirection = Quaternion.AngleAxis(1, new Vector3(0, 0, -1)) * resultDirection;
             resultDirection = resultDirection.normalized;
 
-            points.Add(resultDirection * m_Weapon.WeaponShutRange);
+            points.Add(resultDirection * m_Weapon.ShutRange);
         }
         line.positionCount = points.Count;
         line.SetPositions(points.ToArray());

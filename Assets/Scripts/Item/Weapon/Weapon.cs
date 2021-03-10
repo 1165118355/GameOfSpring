@@ -21,11 +21,11 @@ public class Weapon: Item
     }
     public DamageType m_Type = DamageType.TYPE_KINETIC;
     public string Name = "none";
-    public float  WeaponShutRange = 10;
-    public float  WeaponShutVelocity = 0.2f;
-    public float  WeaponBulletFlyVelocity = 5f;
-    public float  WeaponTurnSpeed =60f;
-    public float  WeaponDamage = 1f;
+    public float  ShutRange = 10;
+    public float  ShutVelocity = 0.2f;
+    public float  BulletFlyVelocity = 5f;
+    public float  TurnSpeed =60f;
+    public float  Damage = 1f;
     public float  m_ShotErrorValue = 0;
     public float  m_ShotErrorValueMax = 15;
     public float  m_ShotErrorValueIncrement = 0.6f;
@@ -48,12 +48,12 @@ public class Weapon: Item
         bulletComponent.clean();
         bulletComponent.FlyDirection = Quaternion.AngleAxis(offsetValue, Vector3.forward) * direction;
         bulletComponent.transform.position = position;
-        bulletComponent.FlyVelocity = WeaponBulletFlyVelocity;
-        bulletComponent.Life = WeaponShutRange;
+        bulletComponent.FlyVelocity = BulletFlyVelocity;
+        bulletComponent.Life = ShutRange;
         bulletComponent.WeaponClassName = GetType().Name;
         bulletComponent.WeaponType = m_Type;
         bulletComponent.Ship = ship;
-        bulletComponent.Damage = WeaponDamage;
+        bulletComponent.Damage = Damage;
         bulletComponent.m_Weapon = this;
         var soundObj = SoundsPool.get().Take(m_FireAudioResouce);
         if (null == soundObj)
