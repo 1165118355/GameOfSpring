@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+public delegate void CallbackWeapon(Weapon weapon);
 
 public class WeaponPreviewItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -13,7 +14,7 @@ public class WeaponPreviewItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public Text m_NameText;
     public Text m_ShotRange;
     Weapon m_Weapon;
-    public WeaponSlot m_Slot;
+    public CallbackWeapon m_OnWeaponChoice;
 
     bool m_IsHover = false;
     float m_HoverTimeCount = 0;
@@ -51,9 +52,11 @@ public class WeaponPreviewItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     void OnSelfClicked()
     {
-        if (!m_Slot)
-            return;
-        m_Slot.switchWeapon(m_Weapon);
+        if(null != m_OnWeaponChoice)
+        {
+            m_OnWeaponChoice(m_Weapon);
+        }
+        hideDescriptionPanel();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

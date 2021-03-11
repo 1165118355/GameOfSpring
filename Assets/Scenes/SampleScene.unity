@@ -7353,8 +7353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_WeaponDescriptionPanel: {fileID: 1589061363}
   m_Viewport: {fileID: 2048144985}
-  m_CurrentPerviewItem: {fileID: 2186389238645178616, guid: 18152d1d5899e7e408e44b4e9982ffbf,
-    type: 3}
+  m_CurrentPerviewItem: {fileID: 1294740507}
   m_PreviewItemPerfab: {fileID: 1294740506}
 --- !u!1 &918871902
 GameObject:
@@ -12963,6 +12962,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4381008310031174386}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1294740507 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2186389238645178616, guid: 18152d1d5899e7e408e44b4e9982ffbf,
+    type: 3}
+  m_PrefabInstance: {fileID: 4381008310031174386}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294740506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8131cda8f436b9e47a21d8736916e0ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1313086055
 GameObject:
   m_ObjectHideFlags: 0
@@ -14610,6 +14621,7 @@ MonoBehaviour:
   m_Name2: {fileID: 74585716}
   m_Level: {fileID: 2054680735}
   m_ShotRange: {fileID: 621180820}
+  m_TurnSpeed: {fileID: 591309733}
   m_Damage: {fileID: 511626711}
   m_ShotError: {fileID: 840723914}
 --- !u!1 &1595524507

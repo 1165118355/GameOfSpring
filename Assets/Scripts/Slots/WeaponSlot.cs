@@ -57,6 +57,8 @@ public class WeaponSlot : Slot
     // Update is called once per frame
     void Update()
     {
+        if (null == m_Weapon)
+            return;
         m_Weapon.update();
         ShutCooling += Time.deltaTime;
         if (ShutCooling > m_Weapon.ShutVelocity)
@@ -98,7 +100,8 @@ public class WeaponSlot : Slot
     }
     private void FixedUpdate()
     {
-
+        if (null == m_Weapon)
+            return;
         /// 攻击模式
         if (m_FireMode != FireMode.WEAPON_MODE_AUTO)
             return;
@@ -195,6 +198,10 @@ public class WeaponSlot : Slot
 
     public void switchWeapon(Weapon weapon)
     {
+        if(null == weapon ||
+            weapon.m_Level != m_Level)
+            return;
+
         if(EmiterObject)
             Destroy(EmiterObject);
         m_Weapon = weapon;

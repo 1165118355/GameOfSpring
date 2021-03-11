@@ -9,6 +9,7 @@ public class WeaponDescriptionPanel : MonoBehaviour
     public Text m_Name2;
     public Text m_Level;
     public Text m_ShotRange;
+    public Text m_TurnSpeed;
     public Text m_Damage;
     public Text m_ShotError;
 
@@ -20,6 +21,7 @@ public class WeaponDescriptionPanel : MonoBehaviour
             m_Name2.text = m_Weapon.Name;
             m_Level.text = m_Weapon.m_Level.ToString();
             m_ShotRange.text = m_Weapon.ShutRange.ToString();
+            m_TurnSpeed.text = m_Weapon.TurnSpeed.ToString();
             m_Damage.text = m_Weapon.Damage.ToString();
             m_ShotError.text = m_Weapon.m_ShotErrorValueMax.ToString();
         }
